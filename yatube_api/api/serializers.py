@@ -8,7 +8,7 @@ from rest_framework.validators import UniqueTogetherValidator
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = '__all__'
+        fields = ('id', 'slug', 'title', 'description')
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -16,13 +16,13 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = '__all__'
+        fields = ('id', 'text', 'pub_date', 'author', 'group')
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('id', 'username', 'email', 'password')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ('id', 'text', 'author', 'post', 'created')
         read_only_fields = ('author', 'post')
         extra_kwargs = {
             'text': {'required': True}
@@ -51,7 +51,7 @@ class FollowSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Follow
-        fields = '__all__'
+        fields = ('user', 'following',)
         validators = (
             UniqueTogetherValidator(
                 queryset=Follow.objects.all(),
